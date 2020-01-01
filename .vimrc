@@ -10,13 +10,20 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'davidhalter/jedi-vim' "python linter
+Plugin 'haya14busa/incsearch.vim' "dynamic search highlighter
+
+Plugin 'tpope/vim-surround' "custom command to change surrounding (cs/ys)
+
+Plugin 'tpope/vim-commentary' "gcc command to comment line out (can be parametrized with motion)
+
+Plugin 'davidhalter/jedi-vim' "python autocompletion
 
 Plugin 'itchyny/lightline.vim' "status bar
 "Plugin 'Lokaltog/powerline' "status bar
-Plugin 'tmhedberg/SimpylFold' "works with automatic indents
+Plugin 'tmhedberg/SimpylFold' "fold that works with automatic indents
 Plugin 'vim-syntastic/syntastic' "syntax checker
 Plugin 'nvie/vim-flake8' "PEP8 checker
+Plugin 'psf/black' "black formatter plugin
 Plugin 'morhetz/gruvbox'
 Plugin 'altercation/vim-colors-solarized'
 
@@ -32,6 +39,8 @@ let g:python3_host_prog = 'usr/bin/python3'
 let myvar="MY VIMRC LOADED"
 let g:jedi#auto_initialization = 1
 let g:jedi#auto_vim_configuration = 1
+let g:black_linelength = 120
+autocmd BufWritePost *.py call flake8#Flake8() "run Flake8 check when writing Python file
 
 filetype plugin indent on
 
@@ -48,3 +57,8 @@ au BufNewFile,BufRead *.py
     \ set expandtab |
     \ set autoindent |
     \ set fileformat=unix
+map / <Plug>(incsearch-forward)
+map ? <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+map rl :set relativenumber<ENTER>
+map nrl :set norelativenumber<ENTER>
